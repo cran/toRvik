@@ -26,7 +26,7 @@ tictoc::toc()
 
 ## ----factors, warning=FALSE---------------------------------------------------
 tictoc::tic()
-toRvik::bart_factors(venue='home') %>%
+toRvik::bart_factors(location='H') %>%
   utils::head(10)
 tictoc::toc()
 
@@ -38,16 +38,14 @@ tictoc::toc()
 
 ## ----player_game, warning=FALSE-----------------------------------------------
 tictoc::tic()
-toRvik::bart_player_game(year=2022, stat='adv') %>%
-  dplyr::filter(team=='Duke') %>%
+toRvik::bart_player_game(year=2022, stat='advanced', team='Duke') %>%
   dplyr::arrange(desc(net)) %>%
   utils::head(10)
 tictoc::toc()
 
 ## ----player season, warning=FALSE---------------------------------------------
 tictoc::tic()
-toRvik::bart_player_season(year=2022, stat='shooting') %>%
-  dplyr::filter(team=='Duke') %>%
+toRvik::bart_player_season(year=2022, stat='shooting', team='Duke') %>%
   dplyr::arrange(desc(mid_a)) %>%
   utils::head(5)
 tictoc::toc()

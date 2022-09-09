@@ -1,25 +1,27 @@
 Package: toRvik
 Type: Package
-Title: Scrape Tidy Men's College Basketball Data from Barttorvik
-Version: 1.0.2
+Title: Extensive and Tidy NCAA Men's College Basketball Data
+Version: 1.1.0
 Authors@R: person("Andrew", "Weatherman", email = "taw38@duke.edu", 
   role = c("aut", "cre"))
-Description: A suite of functions to quickly scrape and tidy advanced metrics,
-    detailed player and game statistics, team and coach histories, and more from
-    Barttorvik<https://barttorvik.com/>.
+Description: An API wrapper for cbbstat and a suite of functions to pull
+  and clean detailed, extensive college basketball statistics from 
+  Barttorvik<https://barttorvik.com/>.
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.1.2
-Imports: cli, curl, dplyr, httr, janitor, jsonlite, lubridate,
-        magrittr, purrr, readr, rvest, stringr, tidyr, withr
+RoxygenNote: 7.2.1
+Imports: cli, crayon, data.table, dplyr, glue, httr, janitor, jsonlite,
+        lubridate, magrittr, purrr, readr, rlang, rvest, stringr,
+        tidyr, withr
 Suggests: covr, knitr, rmarkdown, spelling, testthat (>= 3.0.0), tictoc
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://www.torvik.dev/, https://github.com/andreweatherman/toRvik
 Language: en-US
+Depends: R (>= 2.10)
 NeedsCompilation: no
-Packaged: 2022-04-20 05:07:38 UTC; andrewweatherman
+Packaged: 2022-09-09 12:24:28 UTC; Andrew
 Author: Andrew Weatherman [aut, cre]
 Maintainer: Andrew Weatherman <taw38@duke.edu>
 Repository: CRAN
-Date/Publication: 2022-04-22 08:50:02 UTC
+Date/Publication: 2022-09-09 15:30:02 UTC
