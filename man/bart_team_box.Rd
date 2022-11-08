@@ -5,15 +5,23 @@
 \title{Get Team Box Stats}
 \usage{
 bart_team_box(
-  year = current_season(),
+  year = NULL,
+  start = NULL,
+  end = NULL,
   team = NULL,
   conf = NULL,
   split = NULL,
-  stat = "total"
+  stat = "total",
+  aggregate = FALSE,
+  ...
 )
 }
 \arguments{
 \item{year}{Filters to year.}
+
+\item{start}{Filters to starting year}
+
+\item{end}{Filters to ending year}
 
 \item{team}{Filters to team.}
 
@@ -22,6 +30,11 @@ bart_team_box(
 \item{split}{Split to filter (see details).}
 
 \item{stat}{Filters for agg. stats (total) or avg. stats (avg)}
+
+\item{aggregate}{Aggregate all years (TRUE) or return per-year stats when
+passing a range of years (FALSE; default)}
+
+\item{...}{Any other parameter accepted by the API endpoint}
 }
 \value{
 Returns a tibble with the number of columns dependent on the year.
@@ -35,5 +48,5 @@ The `split` argument filters the results by split, explained below:
 \item{month}{Game month} \item{type}{Game type}}
 }
 \examples{
-\donttest{bart_team_box(split='month', team='Duke')}
+\donttest{try(bart_team_box(split='month', team='Duke'))}
 }

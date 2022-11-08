@@ -5,15 +5,74 @@
 #'
 #' @export
 current_season <- function() {
-  dplyr::if_else(as.double(substr(Sys.Date(), 6, 7)) >= 10,
-                 as.double(substr(Sys.Date(), 1, 4)) + 1, as.double(substr(
-                   Sys.Date(),
-                   1, 4
-                 ))
+  dplyr::if_else(
+    Sys.Date() >= as.Date('2022-11-15'),
+    2023,
+    2022
   )
 }
 
 my_time <- function() strftime(Sys.time(), format = "%H:%M:%S")
+
+# custom operator for use in filter with NULL variables
+`%==%` <- function (e1, e2) {
+  if (is.null(e2)) {
+    return(TRUE)
+  } else {
+    return(e1 == e2)
+  }
+}
+
+# Helper function to match GitHub url path
+gh_data_path <- function(stat) {
+
+  switch(stat,
+         'pg_box' = 'player_game/box.rds',
+         'pg_shooting' = 'player_game/shooting.rds',
+         'pg_adv' = 'player_game/advanced.rds',
+         'pg_all' = 'player_game/all.rds',
+         'ps_box' = 'player_season/box.rds',
+         'ps_shooting' = 'player_season/shooting.rds',
+         'ps_adv' = 'player_season/advanced.rds',
+         'ps_all' = 'player_season/all.rds')
+
+}
+
+# Function to load full data from GitHub
+# This function is adapted from hoopR
+
+load_gh_data <- function(stat = NULL, dbConnection = NULL, tablename = NULL, ...) {
+  if (!is.null(dbConnection) && !is.null(tablename))
+    in_db <- TRUE
+  else in_db <- FALSE
+  url <- paste0('https://github.com/andreweatherman/toRvik-data/raw/main/', gh_data_path(stat))
+  out <- rds_from_url(url) %>% make_toRvik_data('Player Game Stats', Sys.time())
+  if (in_db) {
+    DBI::dbWriteTable(dbConnection, tablename, out, append = TRUE)
+    out <- NULL
+  }
+  else {
+    class(out) <- c("toRvik_data", "tbl_df", "tbl", "data.table", "data.frame")
+  }
+  out
+}
+
+
+# helper function to download .rds from url
+rds_from_url <- function(url) {
+  con <- url(url)
+  on.exit(close(con))
+  load <- try(readRDS(con), silent = TRUE)
+
+  if (inherits(load, "try-error")) {
+    warning('Failed to load data', call. = FALSE)
+    return(data.table::data.table())
+  }
+
+  data.table::setDT(load)
+  return(load)
+}
+
 
 # Functions for custom class
 # turn a data.frame into a tibble/toRvik_data
@@ -74,7 +133,7 @@ rule_footer <- function(x) {
 
 #' @export
 #' @noRd
-print.toRvik_data <- function(x,...) {
+print.toRvik_data <- function(x, ...) {
   cli::cli_rule(left = "{attr(x,'toRvik_type')}",right = "{.emph toRvik {utils::packageVersion('toRvik')}}")
 
   if(!is.null(attr(x,'toRvik_timestamp'))) {
@@ -96,4 +155,18 @@ rbindlist_with_attrs <- function(dflist){
   attr(out,"toRvik_timestamp") <- toRvik_timestamp
   attr(out,"toRvik_type") <- toRvik_type
   out
+
+}
+
+# define list unchop from vctrs
+list_unchop <- function(x,
+                        ...,
+                        indices = NULL,
+                        ptype = NULL,
+                        name_spec = NULL,
+                        name_repair = c("minimal", "unique", "check_unique", "universal", "unique_quiet", "universal_quiet"),
+                        error_arg = "x",
+                        error_call = current_env()) {
+  check_dots_empty0(...)
+  .Call(ffi_list_unchop, x, indices, ptype, name_spec, name_repair, environment())
 }

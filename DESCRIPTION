@@ -1,10 +1,10 @@
 Package: toRvik
 Type: Package
 Title: Extensive and Tidy NCAA Men's College Basketball Data
-Version: 1.1.0
-Authors@R: person("Andrew", "Weatherman", email = "taw38@duke.edu", 
+Version: 1.1.1
+Authors@R: person("Andrew", "Weatherman", email = "andrew@aweatherman.com", 
   role = c("aut", "cre"))
-Description: An API wrapper for cbbstat and a suite of functions to pull
+Description: An API wrapper for 'cbbstat' and a suite of functions to pull
   and clean detailed, extensive college basketball statistics from 
   Barttorvik<https://barttorvik.com/>.
 License: MIT + file LICENSE
@@ -13,15 +13,16 @@ RoxygenNote: 7.2.1
 Imports: cli, crayon, data.table, dplyr, glue, httr, janitor, jsonlite,
         lubridate, magrittr, purrr, readr, rlang, rvest, stringr,
         tidyr, withr
-Suggests: covr, knitr, rmarkdown, spelling, testthat (>= 3.0.0), tictoc
+Suggests: covr, DBI, knitr, rmarkdown, spelling, testthat (>= 3.0.0),
+        tictoc
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://www.torvik.dev/, https://github.com/andreweatherman/toRvik
 Language: en-US
 Depends: R (>= 2.10)
 NeedsCompilation: no
-Packaged: 2022-09-09 12:24:28 UTC; Andrew
+Packaged: 2022-11-07 16:05:05 UTC; Andrew
 Author: Andrew Weatherman [aut, cre]
-Maintainer: Andrew Weatherman <taw38@duke.edu>
+Maintainer: Andrew Weatherman <andrew@aweatherman.com>
 Repository: CRAN
-Date/Publication: 2022-09-09 15:30:02 UTC
+Date/Publication: 2022-11-08 10:50:02 UTC
